@@ -1,0 +1,30 @@
+.logo{
+    cursor: pointer;
+    transition: transform .4s ease-in-out;
+    transform-origin: 50% 50%;
+    width: 50px;
+    background-color: transparent;
+    // padding: 8px;
+    // border-radius: 8px;
+    // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.372);
+
+    &:hover{
+        // transform: scale(2);
+        animation: rot 2s ease-in-out infinite;
+    }
+
+    @keyframes rot {
+        0%{
+            transform: scale(1);
+            opacity: 1;
+        }
+        50%{
+            transform: scale(1.1);
+            opacity: .8;
+        }
+        100%{
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+}
