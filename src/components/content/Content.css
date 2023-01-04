@@ -13,11 +13,56 @@
   background-color: rgba(255, 255, 255, 0.5);
   padding: 16px;
   border-radius: 4px;
-  margin: 8px;
+  margin: 32px 0;
+}
+
+.content div.quadro h2 {
+  font-weight: 300;
+  margin: 8px 0;
 }
 
 .content div.quadro p {
   font-weight: 300;
   width: 100%;
+}
+
+.content div.quadro p span.site {
+  color: #484848;
+  -webkit-animation: pulse 4s ease-in-out infinite forwards;
+          animation: pulse 4s ease-in-out infinite forwards;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    color: #484848;
+  }
+  50% {
+    color: white;
+  }
+  100% {
+    color: #484848;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    color: #484848;
+  }
+  50% {
+    color: white;
+  }
+  100% {
+    color: #484848;
+  }
+}
+
+.content div.espaco {
+  height: 500px;
+}
+
+.content .curriculo {
+  border-radius: 4px;
+  padding: 8px;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 /*# sourceMappingURL=Content.css.map */

@@ -7,4 +7,4 @@ Este é um projeto profissional, que tem o objetivo de servir como um arquivo de
 
 Esta ligado ao continuous deploy do netlify e possui um dominio para conferir o projeto rodando: [forjatech.netlify.app](https://forjatech.netlify.app/)
 
-Criado por: Thyéz de Oliveira Monteiro
+Criado por: [Thyéz de Oliveira Monteiro](./public/curriculo_thyez.pdf)

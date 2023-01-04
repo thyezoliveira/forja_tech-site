@@ -11,4 +11,8 @@
           justify-content: center;
   font-weight: 200;
 }
+
+.header h1 {
+  padding-top: 25px;
+}
 /*# sourceMappingURL=Header.css.map */

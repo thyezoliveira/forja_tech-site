@@ -1,3 +1,7 @@
+$bg_transparent_color: rgba(255, 255, 255, .5);
+$blue: #5D9EDB;
+$darkGrey: rgb(72, 72, 72);
+
 .content{
     height: 1500px;
     padding: 24px;
@@ -8,16 +12,37 @@
     
     div.quadro{
         backdrop-filter: blur(16px);
-        background-color: rgba(255, 255, 255, .5);
+        background-color: $bg_transparent_color;
         padding: 16px;
         border-radius: 4px;
-        margin: 8px;
+        margin: 32px 0;
 
+        h2{
+            font-weight: 300;
+            margin: 8px 0;
+        }
+        
         p{
             font-weight: 300;
             width: 100%;
-        }
 
+            span.site{
+                color: $darkGrey;
+                animation: pulse 4s ease-in-out infinite forwards;
+
+                @keyframes pulse {
+                    0%{color: $darkGrey;}
+                    50%{color: white;}
+                    100%{color: $darkGrey;}
+                }
+            }
+        }
+        
     }
 
+    div.espaco{
+        height: 500px;
+    }
+
+    @import 'curriculo';
 }

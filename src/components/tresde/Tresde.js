@@ -11,7 +11,7 @@ export default class Tresde extends React.Component {
     
     constructor(props) {
         super(props);
-        this.state = {scrollY:0, camera:{x:0,y:20,z:50}, pickPosition:{x:0,y:0}}
+        this.state = {scrollY:0, camera:{x:0,y:20,z:60}, pickPosition:{x:0,y:0}}
         this.scene = new THREE.Scene();
         this.anim = this.anim.bind(this)
         this.setUpCamera = this.setUpCamera.bind(this)
@@ -24,6 +24,7 @@ export default class Tresde extends React.Component {
         this.clearPickPosition = this.clearPickPosition.bind(this)
         this.loadMyObj = this.loadMyObj.bind(this)
         this.setState = this.setState.bind(this)
+        // this.createPyramid = this.createPyramid.bind(this)
     }
 
     main(){
@@ -84,8 +85,8 @@ export default class Tresde extends React.Component {
 
         //ffec42 amarelo forjatech
         this.cubes = [
-            this.makeBoxInstance('#ff0000', 5,10,0, dim1),
-            this.makeBoxInstance('#00ff00', -5,-5,-5, dim2),
+            this.makeBoxInstance('#ff0000', 3,10,0, dim1),
+            this.makeBoxInstance('#00ff00', -3,-5,-5, dim2),
             this.makeBoxInstance('#0000ff', 0,-20,0, dim3),
         ]
     }
@@ -93,7 +94,7 @@ export default class Tresde extends React.Component {
     makeBoxInstance(color, positionX, positionY, positionZ, dimensions){
         let {w,h,d} = dimensions;
         const boxGeometry = new THREE.BoxGeometry(w, h, d);
-        const material = new THREE.MeshNormalMaterial();
+        const material = new THREE.MeshPhongMaterial({color:color});
         const cube = new THREE.Mesh(boxGeometry, material);
         cube.castShadow = true;
         cube.receiveShadow = true;
@@ -104,12 +105,37 @@ export default class Tresde extends React.Component {
         return cube;
     }
 
+    // createPyramid(){
+    //     const vertex1 = new THREE.Vector3(0, 1, 0);
+    //     const vertex2 = new THREE.Vector3(-1, -1, 1);
+    //     const vertex3 = new THREE.Vector3(1, -1, 1);
+    //     const vertex4 = new THREE.Vector3(1, -1, -1);
+    //     const vertex5 = new THREE.Vector3(-1, -1, -1);
+
+    //     // crie uma geometria da pirâmide usando os vértices
+    //     const geometry = new THREE.Geometry();
+    //     geometry.vertices.push(vertex1, vertex2, vertex3, vertex4, vertex5);
+
+    //     // crie os faces da pirâmide usando os vértices
+    //     geometry.faces.push(new THREE.Face3(0, 1, 2));
+    //     geometry.faces.push(new THREE.Face3(0, 2, 3));
+    //     geometry.faces.push(new THREE.Face3(0, 3, 4));
+    //     geometry.faces.push(new THREE.Face3(0, 4, 1));
+    //     geometry.faces.push(new THREE.Face3(1, 4, 3));
+    //     geometry.faces.push(new THREE.Face3(1, 3, 2));
+
+    //     const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    //     const pyramid = new THREE.Mesh(geometry, material);
+
+    //     this.scene.add(pyramid);
+    // }
+
     setUpLights(){
         const shadowResolution = 2048
         const colorOne = 0xFFFFFF;
         const colorTwo = 0xFFFFFF;
-        const intensityOne = 0.5;
-        const intensityTwo = 3;
+        const intensityOne = 5;
+        const intensityTwo = 10;
 
         this.lightOne = new THREE.AmbientLight(colorOne, intensityOne);
         this.lightOne.position.set(0,0,0)
@@ -210,6 +236,7 @@ export default class Tresde extends React.Component {
         this.createPlane()
         this.setupControls()
         this.clearPickPosition()
+        // this.createPyramid()
 
         this.renderer.render(this.scene, this.camera)
         window.addEventListener("scroll", this.onScroll)
