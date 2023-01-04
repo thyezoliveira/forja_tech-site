@@ -40,7 +40,7 @@ export default class Content extends React.Component {
                 <div className="espaco"></div>
 
                 <div className="curriculo">
-                    <p>curriculo <span className="download"><a href="#">Download</a></span></p>
+                    <p>curriculo <span className="download">Download</span></p>
                 </div>
             </div>
             </>
