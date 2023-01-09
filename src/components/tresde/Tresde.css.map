@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,OAAO,CAAA;EACH,WAAW,EAAE,IAAI;EACjB,QAAQ,EAAE,QAAQ;EAClB,KAAK,EAAC,IAAI;EAEV,MAAM,EAAC,MAAM;CAChB",
-    "sources": [
-        "Tresde.scss"
-    ],
-    "names": [],
-    "file": "Tresde.css"
-}
