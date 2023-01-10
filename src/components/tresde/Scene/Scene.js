@@ -10,7 +10,7 @@ export default function Scene(props){
 
     return (
         <>
-        <Canvas className='canvasScene' orthographic={true} onClick={()=> props.toggleFullScreen(!props.isFullScreen)} background={background}>
+        <Canvas className='canvasScene' orthographic={true} onClick={()=> props.toggleFullScreen(false)} background={background}>
             <ambientLight position={[0,50,200]} intensity={1}/>
             <BoxIntro name="Intro"
                 color={cube1color}

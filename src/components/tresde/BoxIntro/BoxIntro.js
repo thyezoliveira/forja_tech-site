@@ -206,6 +206,7 @@ export default function BoxIntro(props) {
         onAnimationComplete={ definition => {
           if(definition.name === 'show'){
             props.setIntroEnd(true)
+            console.log("Final da introdução. Iniciar site...")
           }
         }}
       >

@@ -37,7 +37,8 @@ export default function App() {
       transition:{
         height:{
           duration:1,
-          delay:1
+          delay:1,
+          ease: "linear"
         }
       }
     },
@@ -51,7 +52,7 @@ export default function App() {
         variants={variants}
       >
         <Scene className="canvas" windowProps={windowProps} toggleFullScreen={toggleFullScreen} isFullScreen={isFullScreen} introEnd={introEnd} setIntroEnd={setIntroEnd} animEnd={animEnd} isActivated={isActivated} setAnimationEnd={setAnimationEnd} setActivated={setActivated}/>
-      <motion.div className="bott">
+      <motion.div className="bott" data-intro-end={introEnd}>
         <p>Site em breve!</p>
       </motion.div>
       </motion.div>

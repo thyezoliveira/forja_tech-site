@@ -24,8 +24,19 @@
 }
 
 .bott{
+  opacity: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   height: calc(100vh - 100px);
 }
+
+/* [data-intro-end="true"] .bott{
+  animation: fadeIn 3s ease;
+  opacity: 1;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0;}
+  to { opacity: 1; }
+} */
