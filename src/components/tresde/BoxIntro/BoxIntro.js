@@ -58,21 +58,19 @@ export default function BoxIntro(props) {
   const [textVariants] = useState({
     hide:{
       x:0,
-      z:-1000,
-      name:"hide"
+      z:1000,
+      name:"hide",
+      transition:{
+        type: "keyframes", delay:0, duration:.2
+      }
     },
     show:{
       x: 50,
-      z: 1,
-      name:"show"
-    }
-  })
-  const [textVariantsTransitions] = useState({
-    hide:{
-      type: "keyframes", delay:0, duration:.2
-    },
-    show:{
-      type: "keyframes", delay:1.5, duration:.4
+      z: -200,
+      name:"show",
+      transition:{
+        type: "keyframes", delay:1.5, duration:.4
+      }
     }
   })
   const [cubeLogoVariants] = useState({
@@ -85,16 +83,13 @@ export default function BoxIntro(props) {
       rotateZ:0,
       transition:{
         rotateX:{
-          // repeat:Infinity,
           duration:3
         },
         rotateY:{
           duration:3,
-          // repeat:Infinity
         },
         rotateZ:{
           duration:3,
-          // repeat:Infinity
         },
       },
       default:{easing:"linear"}
@@ -145,13 +140,6 @@ export default function BoxIntro(props) {
         onPointerOver={isActivated ? undefined : ()=> setPointerHover(true)}
         onPointerOut={()=> setPointerHover(false)}
         animate={isActivated ? cubeAnimationVariants.presentation : cubeAnimationVariants.initial}
-        onAnimationComplete={ definition => {
-          console.log("Completed animating", definition)
-          // if(definition.name === "intro"){
-          //   console.log("intro finalizada!")
-          //   onComplete()
-          // }
-        }}
         rotation={[0, 0, 0]}
         position={isActivated ? logoPositionVariants.logo : position}
         >
@@ -161,7 +149,6 @@ export default function BoxIntro(props) {
       
       <motion.group name="LogoTitle"
         animate={isActivated ? textVariants.show : textVariants.hide}
-        transition={isActivated ? textVariantsTransitions.show : textVariantsTransitions.hide}
         initial={textVariants.hide}
         variants={textVariants}
         onAnimationComplete={ definition => {
@@ -180,7 +167,7 @@ export default function BoxIntro(props) {
             textAlign={'left'}
             anchorX="left"
             anchorY="middle"
-            position={[0,0,0]}
+            position={[0,0,1]}
           >
             forjaTech
           </Text>
@@ -188,7 +175,6 @@ export default function BoxIntro(props) {
       
       <motion.mesh name="LogoBox"
           whileHover={cubeLogoVariants.hover}
-          whileTap={cubeLogoVariants.hover}
           onPointerOver={()=> setPointerHover(true)}
           onPointerOut={()=> setPointerHover(false)}
           animate={isActivated ? cubeLogoVariants.default : undefined}
