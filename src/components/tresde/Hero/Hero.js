@@ -43,7 +43,7 @@ export default function Hero(props) {
             animate={visible ? variants.show : variants.hide}
             onAnimationComplete={ definition => {
                 if(definition.name === 'show'){
-                    setAnimationEnd(true)
+                    // setAnimationEnd(true)
                     console.log(definition.name)
                 }
             }}
@@ -60,7 +60,7 @@ export default function Hero(props) {
                 anchorX="center"
                 anchorY="middle"
             >
-                Portifolio a caminho.. 
+                Portifolio a caminho..
                 by: 
                 Thyez de Oliveira
             </Text>

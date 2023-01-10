@@ -8,30 +8,72 @@ export default function BoxIntro(props) {
   const [boxColor] = useState(props.color)
   const [position] = useState(props.position)
   const [windowProps] = useState(props.windowProps)
-  const [isActivated, setActivated] = useState(props.isHovered)
   const [logoPositionVariants] = useState({
     logo:{
-      x: windowProps.windowLeft + 50,
-      y: -windowProps.windowTop - 50,
+      x: 0,//windowProps.windowLeft + 50,
+      y: 0,//-windowProps.windowTop - 50,
+      z: -300,
       scale: 1,
-    }
+      name:"logo",
+      transition:{
+        scale: {
+          type:"spring",
+          duration:3,
+          delay: 0
+        },
+        x:{
+          type:"spring",
+          delay:0.2
+        },
+        y:{
+          type:"spring",
+          delay:0.2
+        },
+        z:{
+          type:"spring",
+          delay:0.2
+        }
+      }
+    },
+    shrink:{
+      x: windowProps.windowLeft + 50,
+      y: 0,//-windowProps.windowTop - 50,
+      z:-300,
+      scale: 1,
+      name:"shrink",
+      transition:{
+        x:{
+          duration:1,
+          delay:0
+        },
+        y:{
+          duration:1,
+          delay:0
+        },
+        z:{
+          duration:2,
+          delay:1,
+        }
+      }
+      },
   })
   const [cubeAnimationVariants] = useState({
     initial:{
       x:0, 
       y:0, 
       z:-300,
-      rotateX:1.57, 
-      rotateZ: 1.57, 
-      rotateY:1.57,
-      scale:1,
+      rotateX:[0, 1.57], 
+      rotateZ: [10,1.57], 
+      rotateY:[6, 1.57],
+      scale:[1, 0.4],
       name:"intro",
       transition:{
         type: "spring",
+        bounce:0.8,
         rotateX:{duration:3, easing: "linear"},
         rotateY:{duration:3, easing: "linear"},
         rotateZ:{duration:3, easing: "linear"},
-        scale:{duration:6},
+        scale:{duration:3},
       }
     },
     presentation:{
@@ -41,8 +83,8 @@ export default function BoxIntro(props) {
       rotateX:[1.57,1.57,0], 
       rotateZ: [1.57,1.57,0], 
       rotateY:[1.57,1.57,0],
-      scale:[1,1,.8],
-      name:"intro",
+      scale:[0.8,1,.8],
+      name:"presentation",
       transition:{
         type: "tween",
         x:{duration:1, easing: "linear",bounce: 1},
@@ -61,7 +103,7 @@ export default function BoxIntro(props) {
       z:1000,
       name:"hide",
       transition:{
-        type: "keyframes", delay:0, duration:.2
+        type: "keyframes", delay:0, duration:0.1
       }
     },
     show:{
@@ -69,15 +111,14 @@ export default function BoxIntro(props) {
       z: -200,
       name:"show",
       transition:{
-        type: "keyframes", delay:1.5, duration:.4
+        type: "keyframes", delay:2, duration:1
       }
     }
   })
   const [cubeLogoVariants] = useState({
     default:{
-      delay:0,
       scale:.4,
-      z:-100,
+      z:100,
       rotateX:0,
       rotateY:0,
       rotateZ:0,
@@ -91,20 +132,17 @@ export default function BoxIntro(props) {
         rotateZ:{
           duration:3,
         },
-      },
-      default:{easing:"linear"}
+      }
     },
     hover:{
-      delay:0,
       scale:.5,
-      z:-100,
+      z:100,
       rotateX:-(1.57 * 2),
       rotateY:-(1.57 * 2),
       rotateZ:-(1.57 * 2),
       transition:{
         scale:{
           type:"keyframes",
-          // repeat:Infinity,
           duration:.8
         },
         rotateX:{
@@ -129,26 +167,40 @@ export default function BoxIntro(props) {
 
   useEffect(()=> {
     document.body.style.cursor = PointerHover ? 'pointer' : 'auto'
-  }, [PointerHover])
+    }, [PointerHover])
+  
+  useEffect(()=> {
+
+  })
 
   return (
     <motion.group name="LogoContainer"
-      animate={isActivated ? logoPositionVariants.logo : undefined}
+      animate={props.isActivated ? props.animEnd ? logoPositionVariants.shrink : logoPositionVariants.logo : undefined}
+      variants={logoPositionVariants}
+      onAnimationComplete={ definition =>{
+        if(definition.name === 'logo'){
+          props.setAnimationEnd(true)
+        } if(definition.name === 'shrink'){
+          console.log("Container do logo posicionado no meio a esquerda.")
+          // props.setIntroEnd(true)
+        }
+      }}
       >
       <motion.mesh name="BaseBox"
-        onClick={(event) => setActivated(true)}
-        onPointerOver={isActivated ? undefined : ()=> setPointerHover(true)}
+        onClick={() => props.setActivated(true)}
+        onPointerOver={()=> setPointerHover(true)}
         onPointerOut={()=> setPointerHover(false)}
-        animate={isActivated ? cubeAnimationVariants.presentation : cubeAnimationVariants.initial}
+        animate={props.isActivated ? cubeAnimationVariants.presentation : cubeAnimationVariants.initial}
         rotation={[0, 0, 0]}
-        position={isActivated ? logoPositionVariants.logo : position}
+        position={position}
+        variants={cubeAnimationVariants}
         >
           <boxGeometry attach="geometry" args={boxDimentions}></boxGeometry>
-          <meshLambertMaterial wireframe={isActivated ? false : true} attach="material" color={isActivated ? boxColor : 'red'}></meshLambertMaterial>
+          <meshLambertMaterial wireframe={props.isActivated ? false : true} attach="material" color={props.isActivated ? boxColor : props.boxColor}></meshLambertMaterial>
       </motion.mesh>
       
       <motion.group name="LogoTitle"
-        animate={isActivated ? textVariants.show : textVariants.hide}
+        animate={props.isActivated ? textVariants.show : textVariants.hide}
         initial={textVariants.hide}
         variants={textVariants}
         onAnimationComplete={ definition => {
@@ -177,7 +229,7 @@ export default function BoxIntro(props) {
           whileHover={cubeLogoVariants.hover}
           onPointerOver={()=> setPointerHover(true)}
           onPointerOut={()=> setPointerHover(false)}
-          animate={isActivated ? cubeLogoVariants.default : undefined}
+          animate={props.isActivated ? cubeLogoVariants.default : undefined}
           rotation={[0, 0, 0]}
           position={[0,0, 1000]}
           >
