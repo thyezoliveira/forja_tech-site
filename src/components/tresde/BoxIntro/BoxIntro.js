@@ -1,13 +1,20 @@
-import React, {useState, useEffect} from "react"
+import React, {useState, useEffect, useRef} from "react"
 import { motion } from "framer-motion-3d"
 import { Text } from "@react-three/drei"
 import fonte from '../coders_crux.ttf'
+import { useFrame } from "@react-three/fiber"
 
 export default function BoxIntro(props) {
+  const logoRef = useRef(null)
+  const baseBox = useRef(null)
+  const iniciarRef = useRef(null)
+  const [bgLogoScale] = useState(0.4)
   const [boxDimentions] = useState([100,100,100,3,3,3])
   const [boxColor] = useState(props.color)
   const [position] = useState(props.position)
   const [windowProps] = useState(props.windowProps)
+  const [PointerHover, setPointerHover] = useState(false)
+  const [showStart, setShowStart] = useState(false)
   const [logoPositionVariants] = useState({
     logo:{
       x: 0,//windowProps.windowLeft + 50,
@@ -62,10 +69,10 @@ export default function BoxIntro(props) {
       x:0, 
       y:0, 
       z:-300,
-      rotateX:[0, 1.57], 
-      rotateZ: [10,1.57], 
-      rotateY:[6, 1.57],
-      scale:[1, 0.4],
+      rotateX:[0,1.57], 
+      rotateZ: [3, 10, 1.57], 
+      rotateY:[2, 6,  1.57],
+      scale:[0, 3, bgLogoScale],
       name:"intro",
       transition:{
         type: "spring",
@@ -73,7 +80,7 @@ export default function BoxIntro(props) {
         rotateX:{duration:3, easing: "linear"},
         rotateY:{duration:3, easing: "linear"},
         rotateZ:{duration:3, easing: "linear"},
-        scale:{duration:3},
+        scale:{duration:2},
       }
     },
     presentation:{
@@ -83,7 +90,7 @@ export default function BoxIntro(props) {
       rotateX:[1.57,1.57,0], 
       rotateZ: [1.57,1.57,0], 
       rotateY:[1.57,1.57,0],
-      scale:[0.8,1,.8],
+      scale:[bgLogoScale + 0.2, bgLogoScale + 0.1, bgLogoScale + 0.2],
       name:"presentation",
       transition:{
         type: "tween",
@@ -163,14 +170,39 @@ export default function BoxIntro(props) {
       }
     }
   })
-  const [PointerHover, setPointerHover] = useState(false)
 
   useEffect(()=> {
     document.body.style.cursor = PointerHover ? 'pointer' : 'auto'
     }, [PointerHover])
-  
-  useEffect(()=> {
 
+  useFrame(()=> {
+    const rotSpeed = 0.03
+    if(!logoRef.current || !iniciarRef.current){
+      return;
+    }
+    
+    if(PointerHover){
+      logoRef.current.rotation.x += 1 * rotSpeed;
+      logoRef.current.rotation.y += 1 * rotSpeed;
+    }
+
+    if(showStart){
+      iniciarRef.current.position.x = 0;
+      iniciarRef.current.position.y = -40;
+      iniciarRef.current.position.z = 1;
+      // baseBox.current.rotation.x -= 1 * rotSpeed;
+      // baseBox.current.rotation.y -= 1 * rotSpeed;
+    } else if(!showStart && props.isActivated) {
+      iniciarRef.current.position.x = 0;
+      iniciarRef.current.position.y = -70;
+      iniciarRef.current.position.z = -1000;
+      // baseBox.current.rotation.x = 0;
+      // baseBox.current.rotation.y = 0;
+    } else {
+      iniciarRef.current.position.x = 0;
+      iniciarRef.current.position.y = -70;
+      iniciarRef.current.position.z = -1000;
+    }
   })
 
   return (
@@ -180,24 +212,67 @@ export default function BoxIntro(props) {
       onAnimationComplete={ definition =>{
         if(definition.name === 'logo'){
           props.setAnimationEnd(true)
-        } if(definition.name === 'shrink'){
-          console.log("Container do logo posicionado no meio a esquerda.")
-          // props.setIntroEnd(true)
+          // setShowStart(true)
         }
       }}
       >
       <motion.mesh name="BaseBox"
-        onClick={() => props.setActivated(true)}
-        onPointerOver={()=> setPointerHover(true)}
-        onPointerOut={()=> setPointerHover(false)}
+        ref={baseBox}
+        whileHover={
+          props.isActivated ?
+          {
+            scale:bgLogoScale + 0.3, 
+            transition:{
+              scale:{
+                type:"spring",
+                duration:2,
+
+              }
+            }
+          } : undefined
+        }
+        onClick={() => {
+          props.toggleFullScreen(false)
+          props.setActivated(true)
+          setShowStart(false)
+        }}
+        onPointerOver={()=> {
+          // setShowStart(true)
+          setPointerHover(true)
+        }}
+        onPointerOut={()=> {
+          // setShowStart(false)
+          setPointerHover(false)
+        }}
         animate={props.isActivated ? cubeAnimationVariants.presentation : cubeAnimationVariants.initial}
+        onAnimationComplete={ definition =>{
+          if(definition.name === 'intro'){
+            setShowStart(true)
+          }
+        }}
         rotation={[0, 0, 0]}
         position={position}
         variants={cubeAnimationVariants}
         >
           <boxGeometry attach="geometry" args={boxDimentions}></boxGeometry>
-          <meshLambertMaterial wireframe={props.isActivated ? false : true} attach="material" color={props.isActivated ? boxColor : props.boxColor}></meshLambertMaterial>
+          <meshLambertMaterial wireframe={props.isActivated ? false : true} attach="material" color={props.isActivated ? boxColor : '#ffff00'}></meshLambertMaterial>
       </motion.mesh>
+
+      <motion.group name="Iniciar" ref={iniciarRef}>
+        <Text name="Iniciar text"
+            color={'#ffff00'}
+            font={fonte}
+            fontSize={22}
+            maxWidth={200}
+            lineHeight={1}
+            letterSpacing={0.02}
+            textAlign={'center'}
+            anchorX="center"
+            anchorY="middle"
+          >
+            Iniciar
+          </Text>
+      </motion.group>
       
       <motion.group name="LogoTitle"
         animate={props.isActivated ? textVariants.show : textVariants.hide}
@@ -206,7 +281,6 @@ export default function BoxIntro(props) {
         onAnimationComplete={ definition => {
           if(definition.name === 'show'){
             props.setIntroEnd(true)
-            console.log("Final da introdução. Iniciar site...")
           }
         }}
       >
@@ -227,7 +301,7 @@ export default function BoxIntro(props) {
       </motion.group>
       
       <motion.mesh name="LogoBox"
-          whileHover={cubeLogoVariants.hover}
+          ref={logoRef}
           onPointerOver={()=> setPointerHover(true)}
           onPointerOut={()=> setPointerHover(false)}
           animate={props.isActivated ? cubeLogoVariants.default : undefined}

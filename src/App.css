@@ -6,7 +6,7 @@
 
 .App{
   position: relative;
-  height: 100vh;
+  height: 100vh;;
 }
 
 .top_bg{
@@ -22,21 +22,3 @@
   box-shadow: 0 2px 8px black;
   transition: height 0.4 linear;
 }
-
-.bott{
-  opacity: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: calc(100vh - 100px);
-}
-
-/* [data-intro-end="true"] .bott{
-  animation: fadeIn 3s ease;
-  opacity: 1;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0;}
-  to { opacity: 1; }
-} */

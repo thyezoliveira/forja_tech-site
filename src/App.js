@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { motion } from 'framer-motion';
 import Scene from './components/tresde/Scene/Scene';
+import SiteContent from './components/tresde/SiteContent/SiteContent'
 import './App.css';
 
 export default function App() {
@@ -8,6 +9,7 @@ export default function App() {
   const [isActivated, setActivated] = useState(false)
   const [animEnd, setAnimationEnd] = useState(false)
   const [introEnd, setIntroEnd] = useState(false)
+  const [startBottom, setStartBottom] = useState(false)
   const [windowProps] = useState({
       windowWidth:window.innerWidth,
       windowHeight:window.innerHeight,
@@ -44,6 +46,12 @@ export default function App() {
     },
   })
 
+  useEffect(()=>{
+    if(introEnd){
+      setStartBottom(true)
+    }
+  }, [introEnd])
+
   return (
     <>
       <motion.div className='top'
@@ -52,9 +60,18 @@ export default function App() {
         variants={variants}
       >
         <Scene className="canvas" windowProps={windowProps} toggleFullScreen={toggleFullScreen} isFullScreen={isFullScreen} introEnd={introEnd} setIntroEnd={setIntroEnd} animEnd={animEnd} isActivated={isActivated} setAnimationEnd={setAnimationEnd} setActivated={setActivated}/>
-      <motion.div className="bott" data-intro-end={introEnd}>
-        <p>Site em breve!</p>
-      </motion.div>
+
+        <motion.div id='bottomDiv' className="bott" style={
+          startBottom ? {
+              display:'flex',
+              flexDirection: 'column',
+              overflowY: 'scroll'
+            } : {
+              display:'none'
+            }}
+            >
+        <SiteContent/>
+        </motion.div>
       </motion.div>
     </>
   )
