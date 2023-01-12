@@ -2,6 +2,7 @@
 
 :root{
     --corlor_one: rgba(0,0,0,0.5);
+    --corlor_two: rgb(255, 255, 0);
 }
 
 .about{
@@ -12,23 +13,18 @@
     align-items: center;
     height: 100vh;
     margin: 16px;
-
+    
     h1.sectionTitle{
         color: var(--corlor_one);
     }
-
-    h2{
-        text-align: center;
-    }
-
+    
     p{
         width: 100%;
         text-align: center;
         margin: 16px 0;
     }
 
-    p.small{
-        margin-top: 32px;
-        font-size:10px;;
+    ul{
+        width: 100%;
     }
 }

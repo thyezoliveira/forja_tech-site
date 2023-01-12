@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&family=Source+Code+Pro:wght@300;400;700&display=swap");
 :root {
   --corlor_one: rgba(0,0,0,0.5);
+  --corlor_two: rgb(255, 255, 0);
 }
 
 .about {
@@ -26,18 +27,13 @@
   color: var(--corlor_one);
 }
 
-.about h2 {
-  text-align: center;
-}
-
 .about p {
   width: 100%;
   text-align: center;
   margin: 16px 0;
 }
 
-.about p.small {
-  margin-top: 32px;
-  font-size: 10px;
+.about ul {
+  width: 100%;
 }
 /*# sourceMappingURL=About.css.map */

@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from "react"
 import { motion } from "framer-motion-3d"
 import { Text } from "@react-three/drei"
-import fonte from '../coders_crux.ttf'
+import fonte from '../../fonts/screaming_neon/screaming_neon.ttf'
 import { useFrame } from "@react-three/fiber"
 
 export default function BoxIntro(props) {

@@ -1,8 +1,8 @@
 import React from "react";
 import { motion } from 'framer-motion';
-// import fonte from '../coders_crux.ttf';
 import Hero from '../Hero/Hero';
 import About from '../About/About';
+import Footer from '../Footer/Footer';
 import './SiteContent.css';
 
 export default function SiteContent(props) {
@@ -11,6 +11,7 @@ export default function SiteContent(props) {
         <motion.div className="siteContent">
             <Hero/>
             <About/>
+            <Footer/>
         </motion.div>
     )
 }

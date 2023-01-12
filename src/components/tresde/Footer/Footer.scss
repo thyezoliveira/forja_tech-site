@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&family=Source+Code+Pro:wght@300;400;700&display=swap');
+
+$corlor_one: rgba(0,0,0,0.5);
+$corlor_two: rgb(255, 255, 0);
+
+footer{
+    height: 200px;
+    background-color:$corlor_two;
+    box-shadow: 0px -2px 4px $corlor_one;
+    width: 100%;
+    display: grid;
+    place-content: center;
+    font-family: 'Fira Code';
+
+    p{
+        width: 100%;
+        max-width: 768px;
+        text-align: center;
+    }
+
+    h2{
+        margin: 16px;
+        color: var(--corlor_one);
+        text-align: center;
+    }
+
+    p{ 
+        font-size: 12px;
+
+        a.curriculo{
+            color: var(--corlor_one);
+            text-decoration: none;
+            padding: 8px;
+        }
+    }
+
+}
